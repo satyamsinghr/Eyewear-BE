@@ -1,0 +1,720 @@
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+node:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module 'D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:778:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+node:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module 'D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)
+    at Function.Module._load (node:internal/modules/cjs/loader:778:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}
+D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112
+          throw new sequelizeErrors.ConnectionError(error);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Failed to connect to localhost:1433 - Could not connect (sequence)
+    at ConnectionManager.connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\mssql\connection-manager.js:112:17)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async ConnectionManager._connect (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MSSqlQueryInterface.tableExists (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Function.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (D:\EyeWear\eyewearbackend\node_modules\sequelize\lib\sequelize.js:377:9) {
+  parent: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  },
+  original: ConnectionError: Failed to connect to localhost:1433 - Could not connect (sequence)
+      at Connection.socketError (D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1404:28)
+      at D:\EyeWear\eyewearbackend\node_modules\tedious\lib\connection.js:1185:14
+      at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+    code: 'ESOCKET',
+    isTransient: undefined
+  }
+}

@@ -1,0 +1,50 @@
+Server is running on port 8080.
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Users' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Users]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Sessions' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Sessions]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Collections' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Collections]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Boxes' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Boxes]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Lenses' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Lenses]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Patients' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Patients]';
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Users' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Users]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Sessions' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Sessions]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Collections' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Collections]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Boxes' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Boxes]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Lenses' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Lenses]';
+Executing (default): SELECT TABLE_NAME, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = N'Patients' AND TABLE_SCHEMA = N'dbo'
+Executing (default): EXEC sys.sp_helpindex @objname = N'[Patients]';
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.
+Server is running on port 8080.

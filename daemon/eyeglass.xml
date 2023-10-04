@@ -1,0 +1,31 @@
+<service>
+	<id>eyeglass.exe</id>
+	<name>Eyeglass</name>
+	<description>eyeglass web server.</description>
+	<executable>C:\Program Files (x86)\nodejs\node.exe</executable>
+	<argument>--harmony</argument>
+	<argument>D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js</argument>
+	<argument>--file</argument>
+	<argument>D:\EyeWear\eyewearbackend\app.js</argument>
+	<argument>--scriptoptions=</argument>
+	<argument>--log</argument>
+	<argument>Eyeglass wrapper</argument>
+	<argument>--grow</argument>
+	<argument>0.25</argument>
+	<argument>--wait</argument>
+	<argument>1</argument>
+	<argument>--maxrestarts</argument>
+	<argument>3</argument>
+	<argument>--abortonerror</argument>
+	<argument>n</argument>
+	<argument>--stopparentfirst</argument>
+	<argument>undefined</argument>
+	<logmode>rotate</logmode>
+	<stoptimeout>30sec</stoptimeout>
+	<serviceaccount>
+		<domain>DESKTOP-8IJM158</domain>
+		<user>LocalSystem</user>
+		<password></password>
+	</serviceaccount>
+	<workingdirectory>D:\EyeWear\eyewearbackend</workingdirectory>
+</service>

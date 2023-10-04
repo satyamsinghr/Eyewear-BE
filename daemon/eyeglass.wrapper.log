@@ -1,0 +1,52 @@
+2023-07-28 14:32:58 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:32:58 - Started 13852
+2023-07-28 14:34:07 - Stopping eyeglass.exe
+2023-07-28 14:34:07 - ProcessKill 13852
+2023-07-28 14:34:08 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2023-07-28 14:34:51 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:34:51 - Started 5656
+2023-07-28 14:36:23 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:36:23 - Started 11832
+2023-07-28 14:38:42 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:38:42 - Started 6584
+2023-07-28 14:39:19 - Stopping eyeglass.exe
+2023-07-28 14:39:19 - ProcessKill 6584
+2023-07-28 14:39:19 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2023-07-28 14:39:46 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:39:46 - Started 5780
+2023-07-28 14:40:54 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 14:40:54 - Started 13596
+2023-07-28 15:13:24 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 15:13:24 - Started 7600
+2023-07-28 15:13:35 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-28 15:13:35 - Started 7756
+2023-07-31 10:51:54 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-31 10:51:54 - Started 5752
+2023-07-31 12:05:05 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-31 12:05:05 - Started 5704
+2023-07-31 14:36:01 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-31 14:36:01 - Started 5752
+2023-07-31 18:04:12 - Starting C:\Program Files (x86)\nodejs\node.exe  --harmony D:\EyeWear\eyewearbackend\node_modules\node-windows\lib\wrapper.js --file D:\EyeWear\eyewearbackend\app.js --scriptoptions= --log "Eyeglass wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-07-31 18:04:12 - Started 5252
