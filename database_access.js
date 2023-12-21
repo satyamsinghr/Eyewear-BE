@@ -167,7 +167,7 @@ module.exports = (app) => {
       };
 
       if (req.query.colId) {
-        whereClause.Coll_id = req.query.colId;
+        whereClause.Coll_id = { [Sequelize.Op.like]: `%${req.query.colId}%` };
       }
 
       const collectionData = await Collection.findAll({
@@ -244,7 +244,7 @@ module.exports = (app) => {
       };
 
       if (req.query.boxId) {
-        whereClause.Box_id = req.query.boxId;
+        whereClause.Box_id = { [Sequelize.Op.like]: `%${req.query.boxId}%` };
       }
 
       const BoxesData = await Boxes.findAll({
