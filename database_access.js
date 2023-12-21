@@ -467,7 +467,6 @@ module.exports = (app) => {
       const Lensesdata = await Lenses.findAll({
         where: whereCondition,
       });
-      console.log("Lensesdata==========>", Lensesdata);
 
       if (!Lensesdata) {
         return res.status(500).send({ message: "Internal server data" });
