@@ -71,7 +71,12 @@ module.exports = (app) => {
       });
       if (userExist) res.status(400).send({ message: "email already exists" });
       req.body.password = bcrypt.hashSync(req.body.password, 8);
-      await User.create(req.body);
+      let data = req.body;
+      data = {
+        ...data,
+        role : '2'
+      }
+      await User.create(data);
       res.status(200).send({ message: "User created successfully" });
     } catch (e) {
       // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
@@ -163,7 +168,7 @@ module.exports = (app) => {
   router.get("/collection", verifyToken, async (req, res) => {
     try {
       const whereClause = {
-        UserId: req.query.userId,
+        // UserId: req.query.userId,
       };
 
       if (req.query.colId) {
@@ -240,7 +245,7 @@ module.exports = (app) => {
   router.get("/box", verifyToken, async (req, res) => {
     try {
       const whereClause = {
-        UserId: req.query.userId,
+        // UserId: req.query.userId,
       };
 
       if (req.query.boxId) {
@@ -429,13 +434,13 @@ module.exports = (app) => {
             ...(LAxis && { LAxis }),
             ...(LAdd && { LAdd }),
             ...(lensId && { lensId }),
-            userId,
+            // userId,
           };
         } else {
           filter = {
             ...(Patient_id && { Patient_id }),
             ...(lensId && { lensId }),
-            userId,
+            // userId,
           };
         }
       } else {
@@ -450,7 +455,7 @@ module.exports = (app) => {
           ...(LAxis && { LAxis }),
           ...(LAdd && { LAdd }),
           ...(lensId && { lensId }),
-          userId,
+          // userId,
         };
       }
 
@@ -483,8 +488,8 @@ module.exports = (app) => {
 
   router.put("/lens", verifyToken, async (req, res) => {
     try {
-      let id = req.body.Lens_id;
-      delete req.body.Lens_id;
+      let id = req.body.id;
+      delete req.body.lensId;
       let LensUpdated = await Lenses.update(req.body, { where: { id: id } });
       if (!LensUpdated)
         res.status(500).send({ message: "Internal server data" });
@@ -539,9 +544,10 @@ module.exports = (app) => {
   });
   router.get("/patient", verifyToken, async (req, res) => {
     try {
-      const patientData = await Patient.findAll({
-        where: { UserId: req.query.userId },
-      });
+      const patientData = await Patient.findAll();
+      // const patientData = await Patient.findAll({
+      //   where: { UserId: req.query.userId },
+      // });
       if (!patientData)
         res.status(500).send({ message: "Internal server data" });
       return res.status(200).send({
@@ -555,9 +561,7 @@ module.exports = (app) => {
 
   router.get("/patientById", verifyToken, async (req, res) => {
     try {
-      const patientData = await Patient.findOne({
-        where: { id: req.query.id },
-      });
+      const patientData = await Patient.findOne();
       if (!patientData)
         res.status(500).send({ message: "Internal server data" });
       return res.status(200).send({
