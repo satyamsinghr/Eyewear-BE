@@ -9,15 +9,10 @@ module.exports = (sequelize, Sequelize) => {
     lensId: {
       type: Sequelize.STRING,
       allowNull: false,
-      unique: true,
-      // validate: {
-      //   isAlphanumeric: true,
-      // },
     },  
     Lens_Status: {
       type: Sequelize.STRING,
       allowNull: true,
-      // require : true
     },  
     Lens_Gender: {
       type: Sequelize.STRING,

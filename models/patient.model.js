@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
       PatientId: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
-        // validate: {
-        //   isAlphanumeric: true,
-        // },
       }, 
       Percentage: {
         type: Sequelize.STRING,

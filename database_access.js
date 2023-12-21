@@ -263,7 +263,6 @@ module.exports = (app) => {
   router.put("/box", verifyToken, async (req, res) => {
     try {
       let id = req.body.id;
-      console.log("box data for put api", req.body);
       delete req.body.Box_id;
       let BoxUpdated = await Boxes.update(req.body, { where: { id: id } });
 
