@@ -6,14 +6,22 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       primaryKey: true
     },
-    Lens_Status: {
+    lensId: {
       type: Sequelize.STRING,
       allowNull: false,
+      unique: true,
+      // validate: {
+      //   isAlphanumeric: true,
+      // },
+    },  
+    Lens_Status: {
+      type: Sequelize.STRING,
+      allowNull: true,
       // require : true
     },  
     Lens_Gender: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     Lens_Type: {
       type: Sequelize.STRING,
@@ -21,35 +29,35 @@ module.exports = (sequelize, Sequelize) => {
     },
     RSphere: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     RCylinder: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     RAxis: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     RAdd: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     LSphere: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     LCylinder: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     LAxis: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     LAdd: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     Lens_DTS: {
       type: Sequelize.STRING,
@@ -61,17 +69,25 @@ module.exports = (sequelize, Sequelize) => {
     },
     Is_Blocked: {
       type: Sequelize.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     Is_Booked: {
       type: Sequelize.BOOLEAN,
-      allowNull: false
+      allowNull: true
     },
     Patient_id: {
       type: Sequelize.UUID,
       allowNull: true
     },
     Lens_ID: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    LLBIF: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    LRBIF: {
       type: Sequelize.STRING,
       allowNull: true
     },
@@ -89,6 +105,14 @@ module.exports = (sequelize, Sequelize) => {
         model: 'users',
         key: 'id'
       }
+    },
+    returned: {
+      type: Sequelize.UUID,
+      
+    },
+    dispense: {
+      type: Sequelize.UUID,
+      
     }
   });
   return Lenses;

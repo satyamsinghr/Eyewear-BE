@@ -6,6 +6,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       primaryKey: true
     },
+    Coll_id: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     Coll_name: {
       type: Sequelize.STRING,
       allowNull: false

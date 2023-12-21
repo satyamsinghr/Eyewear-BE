@@ -8,6 +8,7 @@ module.exports = app => {
     const Boxes = db.Boxes;
     const Lenses = db.Lenses;
     const Patient = db.Patient;
+    const AlgoData = db.AlgoData;
 
     const jwt = require("jsonwebtoken");
     const bcrypt = require("bcryptjs");
@@ -34,7 +35,16 @@ module.exports = app => {
     // this method will be validating jwt token that we will create at the time of login
     // after login in every api we need to send the generated token in Authorization header key even while signOut
     const verifyToken = async (req, res, next) => {
-        let tokenData = await UserLoginSession.findOne({ token: req.headers.authorization });
+        let tokenData;
+        try {
+            tokenData = await UserLoginSession.findOne({ token: req.headers.authorization });
+        } catch (error) {
+            console.error("Error retrieving token from database:", error);
+            return res.status(500).send({
+                message: "Internal Server Error",
+            });
+        }
+
         if (!tokenData) {
             return res.status(403).send({
                 message: "No token provided!",
@@ -67,35 +77,46 @@ module.exports = app => {
 
     router.post("/signIn", async (req, res) => {
         try {
-            console.log("req.body.email", req.body.email)
-            const user = await User.findOne({ 'where': { email: req.body.email } });
-            console.log("user", user)
+            const user = await User.findOne({ where: { email: req.body.email } });
+            console.log('user', user);
             if (!user) {
-                res.status(404).send({ message: "User havenot registered yet" });
-            } else {
-                const passwordIsValid = bcrypt.compareSync(
-                    req.body.password,
-                    user.password
-                );
-                if (!passwordIsValid) {
-                    res.status(401).send({ message: "Invalid Password!" });
-                } else {
-                    const token = jwt.sign({ id: user.email }, "SecretKeyForEyeGlasses", {
-                        expiresIn: 86400, // 24 hours
-                    });
-                    UserLoginSession.create({ token: token })
-                    return res.status(200).send({
-                        token: token,
-                        firstName: user.firstName,
-                        userId: user.id
-                    });
-                }
+                return res.status(404).send({ message: "User has not registered yet" });
             }
 
+            const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+
+            if (!passwordIsValid) {
+                return res.status(401).send({ message: "Invalid Password!" });
+            }
+            const token = generateToken(user.email);
+            const existingSession = await UserLoginSession.findOne({ 'where': { UserId: user.id } });
+            console.log('existingSession', existingSession);
+
+            if (existingSession) {
+                // Update existing session
+                await existingSession.update({ token: token });
+            } else {
+                // Create new session
+                await UserLoginSession.create({ UserId: user.id, token: token });
+            }
+
+            return res.status(200).send({
+                token: token,
+                firstName: user.firstName,
+                userId: user.id
+            });
         } catch (e) {
+            console.log("Error:", e);
             res.status(500).send({ message: "Internal server error", error: e });
         }
     });
+
+    // Helper function to generate a new JWT token
+    const generateToken = (userId) => {
+        return jwt.sign({ id: userId }, "SecretKeyForEyeGlasses", {
+            expiresIn: 86400, // 24 hours
+        });
+    };
 
     router.post("/signOut", async (req, res) => {
         try {
@@ -111,12 +132,10 @@ module.exports = app => {
     // collection CRUD operation
     router.post("/collection", verifyToken, async (req, res) => {
         try {
-            console.log("first", req.body)
             const data = {
                 ...req.body,
                 UserId: req.query.userId
             }
-            console.log("second", data)
             const collectionData = await Collection.create(data);
             if (!collectionData) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
@@ -130,7 +149,6 @@ module.exports = app => {
 
     router.get("/collection", verifyToken, async (req, res) => {
         try {
-            console.log("req.query.userId", req.query.userId);
             const collectionData = await Collection.findAll({ 'where': { UserId: req.query.userId } });
             if (!collectionData) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
@@ -142,27 +160,12 @@ module.exports = app => {
         }
     });
 
-    // router.get("/collection", verifyToken, async (req, res) => {
-    //     try {
-    //         console.log("req.query.id",req.query.id )
-    //         const collectionData = await Collection.findOne({ 'where': { 
-    //             id: req.query.id,
-    //             UserId : req.query.userId
-    //          } });
-    //         if (!collectionData) res.status(500).send({ message: "Internal server data" });
-    //         return res.status(200).send({
-    //             message: 'Collection data',
-    //             Collection_Data: collectionData
-    //         });
-    //     } catch (e) {
-    //         res.status(500).send({ message: "Internal server error", error: e });
-    //     }
-    // });
-
     router.put("/collection", verifyToken, async (req, res) => {
         try {
-            let id = req.body.Coll_id;
-            delete req.body.Coll_id;
+            let id = req.query.id;
+
+            console.log("data to update collection",req.body)
+            //delete req.body.Coll_id;
             let collectionUpdated = await Collection.update(req.body, { 'where': { id: id } });
             if (!collectionUpdated) res.status(500).send({ message: "Internal server data" });
             collectionUpdated = await Collection.findOne({ id: id });
@@ -195,7 +198,6 @@ module.exports = app => {
                 UserId: req.query.userId
             }
             const BoxData = await Boxes.create(data);
-            console.log("req.body", BoxData)
             if (!BoxData) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
                 message: 'Box created successfully',
@@ -220,11 +222,15 @@ module.exports = app => {
 
     router.put("/box", verifyToken, async (req, res) => {
         try {
-            let id = req.body.Box_id;
+            let id = req.body.id;
+            console.log("box data for put api", req.body)
             delete req.body.Box_id;
             let BoxUpdated = await Boxes.update(req.body, { 'where': { id: id } });
+
+            console.log("box data for put api after BoxUpdated", BoxUpdated)
             if (!BoxUpdated) res.status(500).send({ message: "Internal server data" });
             BoxUpdated = await Boxes.findOne({ id: id });
+            console.log("BoxUpdated222222222", BoxUpdated)
             return res.status(200).send({
                 message: 'Box updated successfully',
                 Box_Date: BoxUpdated
@@ -246,6 +252,29 @@ module.exports = app => {
         }
     });
 
+    // Function to generate a unique alphanumeric string of 12 characters
+    async function generateUniqueAlphanumericString() {
+        let uniqueString;
+        let existingRecord;
+        const alphanumericChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        do {
+            // Generate a random string of length 12
+            uniqueString = Array.from({ length: 12 }, () => alphanumericChars[Math.floor(Math.random() * alphanumericChars.length)]).join('');
+
+            // Check if the generated string already exists in the database
+            existingRecord = await Lenses.findOne({
+                where: {
+                    lensId: uniqueString,
+                },
+            });
+
+            // If the string exists, generate a new one
+        } while (existingRecord);
+
+        return uniqueString;
+    }
+
     // Lenses CRUD operation
     router.post("/lens", verifyToken, async (req, res) => {
         try {
@@ -253,13 +282,18 @@ module.exports = app => {
                 ...req.body,
                 UserId: req.query.userId
             }
+            // generateUniqueAlphanumericString().then(async (uniqueString) => {
+            //     console.log('Generated unique string:', uniqueString);
+            //     data.lensId = uniqueString;
+            console.log('post lens data', data);
             const LensData = await Lenses.create(data);
-            console.log("LensData", LensData)
             if (!LensData) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
                 message: 'Box created successfully',
                 Box_Data: LensData
             });
+            // });
+
         } catch (e) {
             res.status(500).send({ message: "Internal server error", error: e });
         }
@@ -297,11 +331,9 @@ module.exports = app => {
                 return lensEntry;
             });
 
-            console.log("lensData", lensData)
             try {
                 const createdLenses = await Lenses.bulkCreate(lensData);
                 // const createdLenses = await Lenses.create(lensData);
-                console.log("createdLenses", createdLenses)
                 if (!createdLenses) {
                     return res.status(500).send({ message: "Error creating lenses" });
                 }
@@ -312,7 +344,6 @@ module.exports = app => {
                 });
 
             } catch (e) {
-                console.log("saving errror", e)
                 res.status(500).send({ message: "Internal server error", error: e });
             }
 
@@ -323,7 +354,6 @@ module.exports = app => {
 
     router.get("/lens", verifyToken, async (req, res) => {
         try {
-            console.log("req.query", req.query);
             const { Patient_id, RSphere, RCylinder, RAxis, RAdd, LSphere, LCylinder, LAxis, LAdd } = req.query;
             let filter = {};
             const userId = req.query.userId;
@@ -341,13 +371,11 @@ module.exports = app => {
                         ...(LAdd && { LAdd }),
                         userId
                     };
-                    console.log("filter1")
                 } else {
                     filter = {
                         ...(Patient_id && { Patient_id }),
                         userId
                     };
-                    console.log("filter2")
                 }
             }
             else {
@@ -363,7 +391,6 @@ module.exports = app => {
                     ...(LAdd && { LAdd }),
                     userId
                 };
-                console.log("filter3")
             }
 
             const whereCondition = Object.keys(filter).length > 0
@@ -373,10 +400,10 @@ module.exports = app => {
                 }
                 : {};
 
-            console.log("whereCondition", whereCondition)
             const Lensesdata = await Lenses.findAll({
                 where: whereCondition
             });
+            console.log('Lensesdata==========>', Lensesdata);
 
             if (!Lensesdata) {
                 return res.status(500).send({ message: "Internal server data" });
@@ -392,11 +419,8 @@ module.exports = app => {
 
     router.put("/lens", verifyToken, async (req, res) => {
         try {
-            console.log("putapi0")
             let id = req.body.Lens_id;
-            console.log("putapi1", req.body)
             delete req.body.Lens_id;
-            console.log("putapi2", req.body)
             let LensUpdated = await Lenses.update(req.body, { 'where': { id: id } });
             if (!LensUpdated) res.status(500).send({ message: "Internal server data" });
             LensUpdated = await Lenses.findOne({ id: id });
@@ -424,16 +448,24 @@ module.exports = app => {
     // Patient CRUD operation
     router.post("/patient", verifyToken, async (req, res) => {
         try {
+
             const data = {
                 ...req.body,
                 UserId: req.query.userId
             }
+
+            console.log('data for patient', data)
+            // generateUniqueAlphanumericStringForPatient().then(async (uniqueString) => {
+            // data.PatientId = uniqueString;
             const patientData = await Patient.create(data);
+            console.log('data for patient222222222222', patientData)
             if (!patientData) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
                 message: 'Patient created successfully',
                 Patient_Data: patientData
             });
+            // });
+
         } catch (e) {
             res.status(500).send({ message: "Internal server error", error: e });
         }
@@ -464,6 +496,43 @@ module.exports = app => {
         }
     });
 
+    router.get("/filterpatientById", verifyToken, async (req, res) => {
+        try {
+            const searchString = req.query.id;
+            console.log('searchString', searchString);
+            if (searchString === '') {
+                return res.status(200).send({
+                    message: 'Filtered patient data',
+                    Patient_Data: []
+                });
+            }
+            const patientData = await Patient.findAll({
+                where: {
+                    PatientId: {
+                        [Op.like]: `%${searchString}%`,
+                    },
+                },
+                // Add a case-insensitive collation for SQL Server
+                collate: {
+                    collation: 'SQL_Latin1_General_CP1_CI_AS',
+                },
+            });
+
+            console.log('patientData', patientData);
+            if (!patientData) {
+                return res.status(500).send({ message: "Internal server data" });
+            }
+            console.log('patientData', patientData);
+            return res.status(200).send({
+                message: 'Filtered patient data',
+                Patient_Data: patientData
+            });
+        } catch (e) {
+            console.log('error in filter', e);
+            res.status(500).send({ message: "Internal server error", error: e });
+        }
+    });
+
     router.get("/patientByName", verifyToken, async (req, res) => {
         try {
             const name = req.query.name.trim()
@@ -472,7 +541,6 @@ module.exports = app => {
                 const fullName = value.firstName + value.lastName;
                 return fullName.includes(name);
             });
-            console.log("filteredData", data);
             if (!data) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
                 message: 'Patient data',
@@ -486,12 +554,9 @@ module.exports = app => {
     router.put("/patient", verifyToken, async (req, res) => {
         try {
 
-            console.log("testing", req.body)
             let id = req.query.id;
             //delete req.body.Patient_id;
-            console.log("id", id)
             let patientUpdated = await Patient.update(req.body, { 'where': { id: id } });
-            console.log("patientUpdated", patientUpdated)
             if (!patientUpdated) res.status(500).send({ message: "Internal server data" });
             patientUpdated = await Patient.findOne({ id: id });
             return res.status(200).send({
@@ -505,7 +570,7 @@ module.exports = app => {
 
     router.delete("/patient", verifyToken, async (req, res) => {
         try {
-            const patientDeleted = await Patient.destroy({ 'where': { id: req.body.Patient_id } });
+            const patientDeleted = await Patient.destroy({ 'where': { id: req.body.id } });
             if (!patientDeleted) res.status(500).send({ message: "Internal server data" });
             return res.status(200).send({
                 message: 'Patient deleted successfully',
@@ -525,6 +590,22 @@ module.exports = app => {
                 Lens_Date: lensUpdated
             });
         } catch (e) {
+            res.status(500).send({ message: "Internal server error", error: e });
+        }
+    });
+
+    router.get("/algoData", verifyToken, async (req, res) => {
+        try {
+            console.log("algoData........", AlgoData);
+            const algoData = await AlgoData.findAll();
+            console.log("algoData>>>>>>>>", algoData);
+            if (!algoData) res.status(500).send({ message: "Internal server data" });
+            return res.status(200).send({
+                message: 'AlgoData',
+                algoData: algoData
+            });
+        } catch (e) {
+            console.log('error/////////', e);
             res.status(500).send({ message: "Internal server error", error: e });
         }
     });

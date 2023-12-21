@@ -6,65 +6,77 @@ module.exports = (sequelize, Sequelize) => {
           allowNull: false,
           primaryKey: true
       },
+      PatientId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        // validate: {
+        //   isAlphanumeric: true,
+        // },
+      }, 
+      Percentage: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }, 
       firstName: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: true
       },
       lastName: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: true
       },
       email: {
           type: Sequelize.STRING,
-          allowNull: false
+          allowNull: true
       },
       Lens_Status: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       Lens_Gender: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       Lens_Type: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       RSphere: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       RCylinder: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       RAxis: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       RAdd: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       LSphere: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       LCylinder: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       LAxis: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       LAdd: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       Lens_DTS: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       Lens_id: {
         type: Sequelize.UUID,
@@ -72,6 +84,14 @@ module.exports = (sequelize, Sequelize) => {
           model: 'lenses',
           key: 'id'
         }
+      },
+      LBIF: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      RBIF: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       UserId: {
         type: Sequelize.UUID,

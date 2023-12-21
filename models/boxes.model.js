@@ -6,6 +6,10 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       primaryKey: true
     },
+    Box_id: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     Col_type: {
       type: Sequelize.STRING,
       allowNull: false

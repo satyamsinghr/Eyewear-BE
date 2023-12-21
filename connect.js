@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize('eyewear', 'sa', '010203', {
+const sequelize = new Sequelize('eyewear', 'sa', 'H@nug1994', {
   host: 'localhost',
   port: 1433,
   dialect: 'mssql'
@@ -16,5 +16,6 @@ db.Collection = require("./models/collection.model.js")(sequelize, Sequelize);
 db.Boxes = require("./models/boxes.model.js")(sequelize, Sequelize);
 db.Lenses = require("./models/lenses.model.js")(sequelize, Sequelize);
 db.Patient = require("./models/patient.model.js")(sequelize, Sequelize);
+db.AlgoData = require("./models/algoData.model.js")(sequelize, Sequelize);
 
 module.exports = db;
