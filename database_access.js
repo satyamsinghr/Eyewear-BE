@@ -113,6 +113,7 @@ module.exports = (app) => {
         token: token,
         firstName: user.firstName,
         userId: user.id,
+        role : user.role
       });
     } catch (e) {
       console.log("Error:", e);
@@ -468,7 +469,7 @@ module.exports = (app) => {
         where: whereCondition,
       });
 
-      
+
       if (!Lensesdata) {
         return res.status(500).send({ message: "Internal server data" });
       }
