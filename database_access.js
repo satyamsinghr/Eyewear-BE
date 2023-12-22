@@ -741,7 +741,7 @@ module.exports = (app) => {
       }
 
       let eyeWearConfig = await EyeWearConfig.update(req.body, {
-        where: { id: id },
+        where: { Id: id },
       });
   
       // Check if the arrays are empty
@@ -767,7 +767,7 @@ module.exports = (app) => {
       }
 
       let axisConfig = await AxisConfig.update(req.body, {
-        where: { id: id },
+        where: { Id: id },
       });
   
       // Check if the arrays are empty
