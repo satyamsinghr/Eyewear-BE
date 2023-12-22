@@ -10,10 +10,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },  
-    SelectedByPatient: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },  
     Lens_Status: {
       type: Sequelize.STRING,
       allowNull: true,
