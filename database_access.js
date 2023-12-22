@@ -704,7 +704,7 @@ module.exports = (app) => {
       if(!userId){
         return res.status(404).send({ message: "User Id is not available" });
       }
-      const user = await User.findOne({ where: { email: userId } });
+      const user = await User.findOne({ where: { id: userId } });
       console.log("user", user);
       if (!user) {
         return res.status(404).send({ message: "User has not registered yet" });
