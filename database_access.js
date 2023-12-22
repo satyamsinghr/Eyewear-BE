@@ -9,6 +9,8 @@ module.exports = (app) => {
   const Lenses = db.Lenses;
   const Patient = db.Patient;
   const AlgoData = db.AlgoData;
+  const EyeWearConfig = db.EyeWearConfig;
+  const AxisConfig = db.AxisConfig;
 
   const jwt = require("jsonwebtoken");
   const bcrypt = require("bcryptjs");
@@ -695,6 +697,42 @@ module.exports = (app) => {
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
+
+  router.get("/config", verifyToken, async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if(!userId){
+        return res.status(404).send({ message: "User Id is not available" });
+      }
+      const user = await User.findOne({ where: { email: userId } });
+      console.log("user", user);
+      if (!user) {
+        return res.status(404).send({ message: "User has not registered yet" });
+      }
+
+      if(user.role != '1'){
+        return res.status(500).send({ message: "User is not allowed to get these details" });
+      }
+
+      const eyeWearConfig = await EyeWearConfig.findAll();
+      const axisConfig = await AxisConfig.findAll();
+  
+      // Check if the arrays are empty
+      if (!eyeWearConfig.length || !axisConfig.length) {
+        return res.status(500).send({ message: "Internal server data" });
+      }
+  
+      return res.status(200).send({
+        message: "Configuration data",
+        axisConfig: axisConfig,
+        eyeWearConfig: eyeWearConfig
+      });
+    } catch (e) {
+      console.error("Error:", e);
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+  
 
   app.use("/api/v1", router);
 };

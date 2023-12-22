@@ -17,5 +17,7 @@ db.Boxes = require("./models/boxes.model.js")(sequelize, Sequelize);
 db.Lenses = require("./models/lenses.model.js")(sequelize, Sequelize);
 db.Patient = require("./models/patient.model.js")(sequelize, Sequelize);
 db.AlgoData = require("./models/algoData.model.js")(sequelize, Sequelize);
+db.AxisConfig = require("./models/AxisConfig.model.js")(sequelize, Sequelize);
+db.EyeWearConfig = require("./models/eyewearConfig.model.js")(sequelize, Sequelize);
 
 module.exports = db;
