@@ -732,6 +732,58 @@ module.exports = (app) => {
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
+
+  router.put("/update-eyewear-config", verifyToken, async (req, res) => {
+    try {
+      const id = req.body.id;
+      if(!id){
+        return res.status(404).send({ message: "User Id is not available" });
+      }
+
+      let eyeWearConfig = await EyeWearConfig.update(req.body, {
+        where: { id: id },
+      });
+  
+      // Check if the arrays are empty
+      if (!eyeWearConfig) {
+        return res.status(500).send({ message: "Internal server data" });
+      }
+  
+      return res.status(200).send({
+        message: "Configuration data updated successfully",
+        eyeWearConfig: eyeWearConfig
+      });
+    } catch (e) {
+      console.error("Error:", e);
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.put("/update-axis-config", verifyToken, async (req, res) => {
+    try {
+      const id = req.body.id;
+      if(!id){
+        return res.status(404).send({ message: "User Id is not available" });
+      }
+
+      let axisConfig = await AxisConfig.update(req.body, {
+        where: { id: id },
+      });
+  
+      // Check if the arrays are empty
+      if (!axisConfig) {
+        return res.status(500).send({ message: "Internal server data" });
+      }
+  
+      return res.status(200).send({
+        message: "Configuration data updated successfully",
+        axisConfig: axisConfig
+      });
+    } catch (e) {
+      console.error("Error:", e);
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
   
 
   app.use("/api/v1", router);
