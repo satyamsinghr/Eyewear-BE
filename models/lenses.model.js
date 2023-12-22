@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: false,
     },  
+    SelectedByPatient: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },  
     Lens_Status: {
       type: Sequelize.STRING,
       allowNull: true,
@@ -72,10 +76,6 @@ module.exports = (sequelize, Sequelize) => {
     },
     Patient_id: {
       type: Sequelize.UUID,
-      allowNull: true
-    },
-    Lens_ID: {
-      type: Sequelize.STRING,
       allowNull: true
     },
     LLBIF: {
