@@ -50,7 +50,7 @@ app.listen(PORT, () => {
 // Function to create a new user
 async function createInitialUser() {
   try {
-    const existingUser = await User.findOne({ where: { email: "admin@hopefulways.com" } });
+    const existingUser = await User.findOne({ where: { email: "admin@hopefullways.com" } });
 
     if (!existingUser) {
       await User.create({
