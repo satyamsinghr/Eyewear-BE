@@ -56,7 +56,7 @@ async function createInitialUser() {
       await User.create({
         firstName : "admin",
         lastName : "admin",
-        email: "admin@hopefulways.com",
+        email: "admin@hopefullways.com",
         password: bcrypt.hashSync("Admin@123", 8), // Hash this password in a real application
         role: "1" //for super admin 2 for admin,
       });

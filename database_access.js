@@ -76,8 +76,8 @@ module.exports = (app) => {
       let data = req.body;
       data = {
         ...data,
-        role : '2'
-      }
+        role: "2",
+      };
       await User.create(data);
       res.status(200).send({ message: "User created successfully" });
     } catch (e) {
@@ -120,7 +120,7 @@ module.exports = (app) => {
         token: token,
         firstName: user.firstName,
         userId: user.id,
-        role : user.role
+        role: user.role,
       });
     } catch (e) {
       console.log("Error:", e);
@@ -303,34 +303,34 @@ module.exports = (app) => {
   });
 
   // Function to generate a unique alphanumeric string of 12 characters
-//   async function generateUniqueAlphanumericString() {
-//     let uniqueString;
-//     let existingRecord;
-//     const alphanumericChars =
-//       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  //   async function generateUniqueAlphanumericString() {
+  //     let uniqueString;
+  //     let existingRecord;
+  //     const alphanumericChars =
+  //       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-//     do {
-//       // Generate a random string of length 12
-//       uniqueString = Array.from(
-//         { length: 12 },
-//         () =>
-//           alphanumericChars[
-//             Math.floor(Math.random() * alphanumericChars.length)
-//           ]
-//       ).join("");
+  //     do {
+  //       // Generate a random string of length 12
+  //       uniqueString = Array.from(
+  //         { length: 12 },
+  //         () =>
+  //           alphanumericChars[
+  //             Math.floor(Math.random() * alphanumericChars.length)
+  //           ]
+  //       ).join("");
 
-//       // Check if the generated string already exists in the database
-//       existingRecord = await Lenses.findOne({
-//         where: {
-//           lensId: uniqueString,
-//         },
-//       });
+  //       // Check if the generated string already exists in the database
+  //       existingRecord = await Lenses.findOne({
+  //         where: {
+  //           lensId: uniqueString,
+  //         },
+  //       });
 
-//       // If the string exists, generate a new one
-//     } while (existingRecord);
+  //       // If the string exists, generate a new one
+  //     } while (existingRecord);
 
-//     return uniqueString;
-//   }
+  //     return uniqueString;
+  //   }
 
   // Lenses CRUD operation
   router.post("/lens", verifyToken, async (req, res) => {
@@ -420,7 +420,7 @@ module.exports = (app) => {
         LCylinder,
         LAxis,
         LAdd,
-        lensId
+        lensId,
       } = req.query;
       let filter = {};
       const userId = req.query.userId;
@@ -474,7 +474,6 @@ module.exports = (app) => {
       const Lensesdata = await Lenses.findAll({
         where: whereCondition,
       });
-
 
       if (!Lensesdata) {
         return res.status(500).send({ message: "Internal server data" });
@@ -701,7 +700,7 @@ module.exports = (app) => {
   router.get("/config", verifyToken, async (req, res) => {
     try {
       const userId = req.query.userId;
-      if(!userId){
+      if (!userId) {
         return res.status(404).send({ message: "User Id is not available" });
       }
       const user = await User.findOne({ where: { id: userId } });
@@ -710,22 +709,24 @@ module.exports = (app) => {
         return res.status(404).send({ message: "User has not registered yet" });
       }
 
-      if(user.role != '1'){
-        return res.status(500).send({ message: "User is not allowed to get these details" });
+      if (user.role != "1") {
+        return res
+          .status(500)
+          .send({ message: "User is not allowed to get these details" });
       }
 
       const eyeWearConfig = await EyeWearConfig.findAll();
       const axisConfig = await AxisConfig.findAll();
-  
+
       // Check if the arrays are empty
       if (!eyeWearConfig.length || !axisConfig.length) {
         return res.status(500).send({ message: "Internal server data" });
       }
-  
+
       return res.status(200).send({
         message: "Configuration data",
         axisConfig: axisConfig,
-        eyeWearConfig: eyeWearConfig
+        eyeWearConfig: eyeWearConfig,
       });
     } catch (e) {
       console.error("Error:", e);
@@ -735,23 +736,28 @@ module.exports = (app) => {
 
   router.put("/update-eyewear-config", verifyToken, async (req, res) => {
     try {
-      const id = req.body.id;
-      if(!id){
-        return res.status(404).send({ message: "User Id is not available" });
+      const data = req.body;
+      if (!data || data.length === 0) {
+        return res.status(404).send({ message: "No data to update" });
       }
 
-      let eyeWearConfig = await EyeWearConfig.update(req.body, {
-        where: { Id: id },
+      const updatePromises = data.map(async (item) => {
+        try {
+          const [updated] = await EyeWearConfig.update(item, {
+            where: { Id: item.Id },
+          });
+
+        } catch (error) {
+          console.error("Error updating row:", error);
+          throw error;
+        }
       });
-  
+
+      await Promise.all(updatePromises);
       // Check if the arrays are empty
-      if (!eyeWearConfig) {
-        return res.status(500).send({ message: "Internal server data" });
-      }
-  
+      
       return res.status(200).send({
         message: "Configuration data updated successfully",
-        eyeWearConfig: eyeWearConfig
       });
     } catch (e) {
       console.error("Error:", e);
@@ -761,30 +767,34 @@ module.exports = (app) => {
 
   router.put("/update-axis-config", verifyToken, async (req, res) => {
     try {
-      const id = req.body.id;
-      if(!id){
-        return res.status(404).send({ message: "User Id is not available" });
+      const data = req.body;
+      if (!data || data.length === 0) {
+        return res.status(404).send({ message: "No data to update" });
       }
+      // Assuming 'Id' is the primary key
+      const updatePromises = data.map(async (item) => {
+        try {
+          const [updated] = await AxisConfig.update(item, {
+            where: { Id: item.Id },
+          });
 
-      let axisConfig = await AxisConfig.update(req.body, {
-        where: { Id: id },
+        } catch (error) {
+          console.error("Error updating row:", error);
+          throw error;
+        }
       });
-  
+
+      await Promise.all(updatePromises);
       // Check if the arrays are empty
-      if (!axisConfig) {
-        return res.status(500).send({ message: "Internal server data" });
-      }
-  
+      
       return res.status(200).send({
         message: "Configuration data updated successfully",
-        axisConfig: axisConfig
       });
     } catch (e) {
       console.error("Error:", e);
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
-  
 
   app.use("/api/v1", router);
 };
