@@ -135,6 +135,81 @@ module.exports = (app) => {
     });
   };
 
+  router.get("/users", verifyToken, async (req, res) => {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res.status(404).send({ message: "User Id is not available" });
+      }
+      const user = await User.findOne({ where: { id: userId } });
+      console.log("user", user);
+      if (!user) {
+        return res.status(404).send({ message: "User has not registered yet" });
+      }
+
+      if (user.role != "1") {
+        return res
+          .status(500)
+          .send({ message: "User is not allowed to get these details" });
+      }
+
+      const users = await User.findAll();
+      if (!users)
+        res.status(500).send({ message: "Internal server data" });
+
+      return res.status(200).send({
+        message: "Users data",
+        Users: users,
+      });
+    } catch (e) {
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.post("/create-users", verifyToken, async (req, res) => {
+    try {
+      const userExist = await User.findOne({
+        where: { email: req.body.email },
+      });
+      if (userExist) res.status(400).send({ message: "Email already exists" });
+      req.body.password = bcrypt.hashSync(req.body.password, 8);
+      let data = req.body;
+      data = {
+        ...data,
+        role: "2",
+      };
+      await User.create(data);
+      res.status(200).send({ message: "User created successfully" });
+    } catch (e) {
+      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.delete("/delete-users", verifyToken, async (req, res) => {
+    try {
+      const id = req.body.id
+      if(!id){
+        res.status(500).send({ message: "Id is not available" });
+      }
+
+      const userExist = await User.findOne({
+        where: { id: id},
+      });
+      if (!userExist){
+        res.status(500).send({ message: "User is not available" });
+      }
+     
+      await User.destroy({
+        where: { id: id },
+      });
+      res.status(200).send({ message: "User deleted successfully" });
+    } catch (e) {
+      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
   router.post("/signOut", async (req, res) => {
     try {
       await UserLoginSession.destroy({
