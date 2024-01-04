@@ -186,6 +186,33 @@ module.exports = (app) => {
     }
   });
 
+  router.put("/update-user", verifyToken, async (req, res) => {
+    try {
+      const id = req.body.id
+      if(!id){
+        res.status(400).send({ message: "User id is not available" });
+      }
+      const userExist = await User.findOne({
+        where: { id: req.body.id },
+      });
+      if (!userExist) res.status(400).send({ message: "User not found" });
+      if (userExist.password == req.body.password) {
+        delete req.body.password;
+      } else {
+        req.body.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      await User.update(req.body,{
+        where : {
+          id : req.body.id
+        }
+      });
+      res.status(200).send({ message: "User created successfully" });
+    } catch (e) {
+      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
   router.delete("/delete-users", verifyToken, async (req, res) => {
     try {
       const id = req.body.id

@@ -38,7 +38,7 @@ const eyeWearConfigSeedData = [
     {
       NewValue: "",
       CurrentValue: "0.95",
-      Parameters: "RAxixMult",
+      Parameters: "RAxisMult",
       Description: "Right Axis Multiplier",
     },
     {

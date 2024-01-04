@@ -19,7 +19,8 @@ const AxisConfig = db.AxisConfig;
 // });
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin: "*",
   })
 );
 // Sync the database with migrations
