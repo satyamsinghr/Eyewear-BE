@@ -689,7 +689,7 @@ module.exports = (app) => {
       const patientData = await Patient.findAll({
         where: {
           PatientId: {
-            [Op.like]: `%${searchString}%`,
+            [Op.like]: `%${searchString}`,
           },
         },
         // Add a case-insensitive collation for SQL Server
