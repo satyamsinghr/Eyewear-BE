@@ -26,19 +26,13 @@ const eyeWearConfigSeedData = [
     {
       NewValue: "",
       CurrentValue: "0.4",
-      Parameters: "RCliMult",
-      Description: "Right Cylinder Multiplier",
-    },
-    {
-      NewValue: "",
-      CurrentValue: "0.4",
       Parameters: "LCylMult",
       Description: "Left Cylinder Multiplier",
     },
     {
       NewValue: "",
       CurrentValue: "0.95",
-      Parameters: "RAxixMult",
+      Parameters: "RAxisMult",
       Description: "Right Axis Multiplier",
     },
     {

@@ -7,6 +7,7 @@ module.exports = (app) => {
   const Collection = db.Collection;
   const Boxes = db.Boxes;
   const Lenses = db.Lenses;
+  const SelectedReader = db.SelectedReader;
   const Patient = db.Patient;
   const AlgoData = db.AlgoData;
   const EyeWearConfig = db.EyeWearConfig;
@@ -37,10 +38,27 @@ module.exports = (app) => {
   // this method will be validating jwt token that we will create at the time of login
   // after login in every api we need to send the generated token in Authorization header key even while signOut
   const verifyToken = async (req, res, next) => {
-    let tokenData;
     try {
+      let tokenData;
+      console.log(req.headers.authorization)
       tokenData = await UserLoginSession.findOne({
-        token: req.headers.authorization,
+        where: {token: req.headers.authorization},
+      });
+      console.log("tokenDatatokenData", tokenData)
+      if (!tokenData) {
+        return res.status(403).send({
+          message: "No token provided!",
+        });
+      }
+      console.log("tokenData", tokenData)
+      jwt.verify(tokenData.token, "SecretKeyForEyeGlasses", (err, decoded) => {
+        if (err) {
+          return res.status(401).send({
+            message: "Unauthorized!",
+          });
+        }
+        req.email = decoded.id;
+        next();
       });
     } catch (error) {
       console.error("Error retrieving token from database:", error);
@@ -48,23 +66,19 @@ module.exports = (app) => {
         message: "Internal Server Error",
       });
     }
-
-    if (!tokenData) {
-      return res.status(403).send({
-        message: "No token provided!",
-      });
-    }
-    jwt.verify(tokenData.token, "SecretKeyForEyeGlasses", (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          message: "Unauthorized!",
-        });
-      }
-      req.email = decoded.id;
-      next();
-    });
   };
 
+  router.post("/cleardb", async (req, res) => {
+    try {
+      // Update Lens_Status to 'available'
+      await Lenses.update({ Lens_Status: 'available' }, { where: {} });
+      await SelectedReader.destroy({ where: {} });
+      res.status(200).send({ message: "Lens_Status updated to 'available' successfully" });
+    } catch (e) {
+      console.error("Error updating Lens_Status:", e);
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
   // Sign in, Sign up, sign out
   router.post("/signUp", async (req, res) => {
     try {
@@ -113,6 +127,8 @@ module.exports = (app) => {
         await existingSession.update({ token: token });
       } else {
         // Create new session
+      console.log("user.id", user.id);
+      console.log("token", token);
         await UserLoginSession.create({ UserId: user.id, token: token });
       }
 
@@ -179,6 +195,33 @@ module.exports = (app) => {
         role: "2",
       };
       await User.create(data);
+      res.status(200).send({ message: "User created successfully" });
+    } catch (e) {
+      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.put("/update-user", verifyToken, async (req, res) => {
+    try {
+      const id = req.body.id
+      if(!id){
+        res.status(400).send({ message: "User id is not available" });
+      }
+      const userExist = await User.findOne({
+        where: { id: req.body.id },
+      });
+      if (!userExist) res.status(400).send({ message: "User not found" });
+      if (userExist.password == req.body.password) {
+        delete req.body.password;
+      } else {
+        req.body.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      await User.update(req.body,{
+        where : {
+          id : req.body.id
+        }
+      });
       res.status(200).send({ message: "User created successfully" });
     } catch (e) {
       // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
@@ -662,7 +705,7 @@ module.exports = (app) => {
       const patientData = await Patient.findAll({
         where: {
           PatientId: {
-            [Op.like]: `%${searchString}%`,
+            [Op.like]: `${searchString}`,
           },
         },
         // Add a case-insensitive collation for SQL Server
@@ -711,8 +754,9 @@ module.exports = (app) => {
       let patientUpdated = await Patient.update(req.body, {
         where: { id: id },
       });
-      if (!patientUpdated)
+      if (!patientUpdated){
         res.status(500).send({ message: "Internal server data" });
+      }
       patientUpdated = await Patient.findOne({ id: id });
       return res.status(200).send({
         message: "Patient updated successfully",
@@ -798,10 +842,21 @@ module.exports = (app) => {
         return res.status(500).send({ message: "Internal server data" });
       }
 
+
+      const sortArray = (array) => {
+        return array.sort((a, b) => {
+          const paramA = a.Parameters.toUpperCase();
+          const paramB = b.Parameters.toUpperCase();
+          return paramA.localeCompare(paramB);
+        });
+      };
+      const sortedEyeWearConfig = sortArray(eyeWearConfig);
+
+
       return res.status(200).send({
         message: "Configuration data",
         axisConfig: axisConfig,
-        eyeWearConfig: eyeWearConfig,
+        eyeWearConfig: sortedEyeWearConfig,
       });
     } catch (e) {
       console.error("Error:", e);
@@ -871,5 +926,87 @@ module.exports = (app) => {
     }
   });
 
+  router.post("/selectedReader", verifyToken, async (req, res) => {
+    try {
+      const data = {
+        ...req.body,
+      };
+
+      const existingRecord = await SelectedReader.findOne({
+       where :{ lensId: data.lensId,
+        Patient_id: data.Patient_id}
+      });
+
+      if (existingRecord) {
+        return res.status(400).send({ message: "Record with the same lensId and PatientId already exists" });
+      }
+
+      const readerData = await SelectedReader.create(data);
+      if (!readerData)
+        res.status(500).send({ message: "Internal server data" });
+      return res.status(200).send({
+        message: "selectedReader created successfully",
+        readerData: readerData,
+      });
+      // });
+    } catch (e) {
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.get("/selectedReaderFilter", verifyToken, async (req, res) => {
+    try {
+      const Patient_id = req.query.patientId;
+      const readers = await SelectedReader.findAll({
+        where: { Patient_id: Patient_id },
+      });
+      if (readers.length > 0) {
+        const lensIds = readers.map((reader) => reader.dataValues.lensId);
+        const readersLens = await Lenses.findAll({
+          where: { lensId: lensIds },
+        });
+
+        return res.status(200).send({
+          message: "Readers fetched successfully",
+          readers: readersLens,
+        });
+      }
+      return res.status(200).send({
+        message: "Readers fetched successfully",
+        readers: [],
+      });
+
+
+    } catch (e) {
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+
+  router.delete("/deleteSelectedReader", verifyToken, async (req, res) => {
+    try {
+      const patientId = req.body.patientId;
+      const lensId = req.body.lensId;
+      if (!patientId) {
+        res.status(500).send({ message: "Id is not available" });
+      }
+
+      const userExist = await SelectedReader.findOne({
+        where: { Patient_id: patientId,
+          lensId: lensId},
+      });
+      if (!userExist) {
+        res.status(500).send({ message: "User is not available" });
+      }
+
+      await SelectedReader.destroy({
+        where: { Patient_id: patientId,lensId: lensId},
+      });
+      res.status(200).send({ message: "User deleted successfully" });
+    } catch (e) {
+      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
   app.use("/api/v1", router);
 };

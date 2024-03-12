@@ -70,6 +70,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       allowNull: true
     },
+    isReading: {
+      type: Sequelize.BOOLEAN,
+      allowNull: true,
+    },
     Patient_id: {
       type: Sequelize.STRING,
       allowNull: true
