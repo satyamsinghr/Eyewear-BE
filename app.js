@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const db = require("./connect");
 const User = db.User;
+const Collection = db.Collection;
+const UserCollection = db.UserCollection;
 const EyeWearConfig = db.EyeWearConfig;
 const AxisConfig = db.AxisConfig;
 // db.sequelize.sync({ force: true }).then(() => {
@@ -32,6 +34,8 @@ db.sequelize
     createInitialUser();
     createInitialEyewearConfig();
     createInitialAxisConfig();
+
+    createAssociations();
   })
   .catch((err) => {
     console.error("Error syncing database:", err);
@@ -48,16 +52,23 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
+async function createAssociations() {
+  // User.belongsToMany(Collection, { through: UserCollection });
+  // Collection.belongsToMany(User, { through: UserCollection });
+  User.belongsToMany(Collection, { through: UserCollection, foreignKey: 'userId', otherKey: 'Coll_id' });
+Collection.belongsToMany(User, { through: UserCollection, foreignKey: 'Coll_id', otherKey: 'userId' });
+}
+
 // Function to create a new user
 async function createInitialUser() {
   try {
-    const existingUser = await User.findOne({ where: { email: "admin@hopefullways.com" } });
+    const existingUser = await User.findOne({ where: { email: "admin@hopefulways.com" } });
 
     if (!existingUser) {
       await User.create({
-        firstName : "admin",
-        lastName : "admin",
-        email: "admin@hopefullways.com",
+        firstName: "admin",
+        lastName: "admin",
+        email: "admin@hopefulways.com",
         password: bcrypt.hashSync("Admin@123", 8), // Hash this password in a real application
         role: "1" //for super admin 2 for admin,
       });

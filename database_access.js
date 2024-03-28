@@ -8,10 +8,12 @@ module.exports = (app) => {
   const Boxes = db.Boxes;
   const Lenses = db.Lenses;
   const SelectedReader = db.SelectedReader;
+  const UserCollection = db.UserCollection;
   const Patient = db.Patient;
   const AlgoData = db.AlgoData;
   const EyeWearConfig = db.EyeWearConfig;
   const AxisConfig = db.AxisConfig;
+  const moment = require('moment');
 
   const jwt = require("jsonwebtoken");
   const bcrypt = require("bcryptjs");
@@ -33,7 +35,6 @@ module.exports = (app) => {
   //     }
   // });
 
-  const upload = multer().single("csv");
 
   // this method will be validating jwt token that we will create at the time of login
   // after login in every api we need to send the generated token in Authorization header key even while signOut
@@ -42,7 +43,7 @@ module.exports = (app) => {
       let tokenData;
       console.log(req.headers.authorization)
       tokenData = await UserLoginSession.findOne({
-        where: {token: req.headers.authorization},
+        where: { token: req.headers.authorization },
       });
       console.log("tokenDatatokenData", tokenData)
       if (!tokenData) {
@@ -68,17 +69,29 @@ module.exports = (app) => {
     }
   };
 
+  // router.post("/cleardb", async (req, res) => {
+  //   try {
+  //     const collId = req.query.collId; 
+  //     await Lenses.update({ Lens_Status: 'available' }, { where: { CollectionId: collId } });
+  //     await SelectedReader.destroy({ where: { CollectionId: collId } });
+  //     res.status(200).send({ message: "Lens_Status updated to 'available' successfully" });
+  //   } catch (e) {
+  //     console.error("Error updating Lens_Status:", e);
+  //     res.status(500).send({ message: "Internal server error", error: e });
+  //   }
+  // });
   router.post("/cleardb", async (req, res) => {
     try {
-      // Update Lens_Status to 'available'
-      await Lenses.update({ Lens_Status: 'available' }, { where: {} });
-      await SelectedReader.destroy({ where: {} });
-      res.status(200).send({ message: "Lens_Status updated to 'available' successfully" });
+      const collId = req.query.collId;
+      await Lenses.update({ Lens_Status: 'reading' }, { where: { CollectionId: collId, lensId: { [Op.like]: 'ZZZ%' } } });
+      await Lenses.update({ Lens_Status: 'available' }, { where: { CollectionId: collId, lensId: { [Op.notLike]: 'ZZZ%' } } });
+      res.status(200).send({ message: "Lens_Status updated successfully" });
     } catch (e) {
       console.error("Error updating Lens_Status:", e);
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
+
   // Sign in, Sign up, sign out
   router.post("/signUp", async (req, res) => {
     try {
@@ -127,16 +140,25 @@ module.exports = (app) => {
         await existingSession.update({ token: token });
       } else {
         // Create new session
-      console.log("user.id", user.id);
-      console.log("token", token);
+        console.log("user.id", user.id);
+        console.log("token", token);
         await UserLoginSession.create({ UserId: user.id, token: token });
       }
+      let collIds = [];
+      if (user.role !== 1) {
+        const userCollections = await UserCollection.findAll({
+          where: { userId: user.id },
+          attributes: ["Coll_id"],
+        });
 
+        collIds = userCollections.map((item) => item.Coll_id);
+      }
       return res.status(200).send({
         token: token,
         firstName: user.firstName,
         userId: user.id,
         role: user.role,
+        collIds: collIds || null,
       });
     } catch (e) {
       console.log("Error:", e);
@@ -151,7 +173,7 @@ module.exports = (app) => {
     });
   };
 
-  router.get("/users", verifyToken, async (req, res) => {
+  router.get("/users", async (req, res) => {
     try {
       const userId = req.query.userId;
       if (!userId) {
@@ -169,7 +191,17 @@ module.exports = (app) => {
           .send({ message: "User is not allowed to get these details" });
       }
 
-      const users = await User.findAll();
+      // const users = await User.findAll();
+      // const users = await User.findAll();
+      const users = await User.findAll({
+        include: [{
+          model: Collection,
+          through: {
+            attributes: []
+          }
+        }]
+      });
+
       if (!users)
         res.status(500).send({ message: "Internal server data" });
 
@@ -190,11 +222,20 @@ module.exports = (app) => {
       if (userExist) res.status(400).send({ message: "Email already exists" });
       req.body.password = bcrypt.hashSync(req.body.password, 8);
       let data = req.body;
+      const Coll_id = req.body.Coll_Id || [];
       data = {
         ...data,
         role: "2",
       };
-      await User.create(data);
+      const userColl = await User.create(data);
+
+      for (const collId of Coll_id) {
+        await UserCollection.create({
+          userId: userColl.id,
+          Coll_Id: collId,
+        });
+      }
+
       res.status(200).send({ message: "User created successfully" });
     } catch (e) {
       // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
@@ -202,29 +243,70 @@ module.exports = (app) => {
     }
   });
 
+  // router.put("/update-user", verifyToken, async (req, res) => {
+  //   try {
+  //     const id = req.body.id
+  //     if(!id){
+  //       res.status(400).send({ message: "User id is not available" });
+  //     }
+  //     const userExist = await User.findOne({
+  //       where: { id: req.body.id },
+  //     });
+  //     if (!userExist) res.status(400).send({ message: "User not found" });
+  //     if (userExist.password == req.body.password) {
+  //       delete req.body.password;
+  //     } else {
+  //       req.body.password = bcrypt.hashSync(req.body.password, 8);
+  //     }
+  //     await User.update(req.body,{
+  //       where : {
+  //         id : req.body.id
+  //       }
+  //     });
+  //     res.status(200).send({ message: "User created successfully" });
+  //   } catch (e) {
+  //     // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
+  //     res.status(500).send({ message: "Internal server error", error: e });
+  //   }
+  // });
+
   router.put("/update-user", verifyToken, async (req, res) => {
     try {
-      const id = req.body.id
-      if(!id){
+      const id = req.body.id;
+      if (!id) {
         res.status(400).send({ message: "User id is not available" });
       }
       const userExist = await User.findOne({
-        where: { id: req.body.id },
+        where: { id: id },
       });
       if (!userExist) res.status(400).send({ message: "User not found" });
-      if (userExist.password == req.body.password) {
-        delete req.body.password;
-      } else {
+
+      // Update user password if it has changed
+      if (userExist.password !== req.body.password) {
         req.body.password = bcrypt.hashSync(req.body.password, 8);
+      } else {
+        delete req.body.password; // If password remains the same, remove from update data
       }
-      await User.update(req.body,{
-        where : {
-          id : req.body.id
-        }
+
+      await User.update(req.body, {
+        where: { id: id }
       });
-      res.status(200).send({ message: "User created successfully" });
+
+      // Update user collection
+      const Coll_id = req.body.Coll_id || [];
+      if (req.body.Coll_id) {
+        await UserCollection.destroy({
+          where: { userId: id }
+        });
+        for (const collId of Coll_id) {
+          await UserCollection.create({
+            userId: id,
+            Coll_Id: collId
+          });
+        }
+      }
+      res.status(200).send({ message: "User updated successfully" });
     } catch (e) {
-      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
@@ -232,23 +314,38 @@ module.exports = (app) => {
   router.delete("/delete-users", verifyToken, async (req, res) => {
     try {
       const id = req.body.id
-      if(!id){
+      if (!id) {
         res.status(500).send({ message: "Id is not available" });
       }
-
       const userExist = await User.findOne({
-        where: { id: id},
+        where: { id: id },
       });
-      if (!userExist){
+      if (!userExist) {
         res.status(500).send({ message: "User is not available" });
       }
-     
+      const UserCollectionExist = await UserCollection.findOne({
+        where: { UserId: id },
+      });
+      if (UserCollectionExist) {
+        await UserCollection.destroy({
+          where: { userId: id },
+        });
+      }
+
+      const UserLoginSessionExist = await UserLoginSession.findOne({
+        where: { userId: id },
+      });
+      if (UserLoginSessionExist)
+        await UserLoginSession.destroy({
+          where: { UserId: id },
+        });
+
       await User.destroy({
         where: { id: id },
       });
+
       res.status(200).send({ message: "User deleted successfully" });
     } catch (e) {
-      // it will handle all the exceptions like Database error (example I have required all the fields in user table, so it will through the required field validation)
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
@@ -309,6 +406,43 @@ module.exports = (app) => {
     }
   });
 
+  router.post("/getCollectionsByIds", verifyToken, async (req, res) => {
+    try {
+      const { collectionIds } = req.body;
+
+      if (!collectionIds || !Array.isArray(collectionIds) || collectionIds.length === 0) {
+        return res.status(400).send({ message: "Invalid or empty collection IDs provided." });
+      }
+
+      const whereClause = {
+        id: {
+          [Sequelize.Op.in]: collectionIds,
+        },
+      };
+
+      // Filter based on req.query.colId if present
+      if (req.query.colId) {
+        whereClause.Coll_id = { [Sequelize.Op.like]: `%${req.query.colId}%` };
+      }
+
+      const collectionData = await Collection.findAll({
+        where: whereClause,
+      });
+
+      // if (!collectionData || collectionData.length === 0) {
+      //   return res.status(404).send({ message: "Collections not found for the provided IDs." });
+      // }
+
+      return res.status(200).send({
+        message: "Collections data",
+        Collection_Data: collectionData,
+      });
+    } catch (e) {
+      console.error("Error:", e);
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
   router.put("/collection", verifyToken, async (req, res) => {
     try {
       let id = req.query.id;
@@ -332,9 +466,24 @@ module.exports = (app) => {
 
   router.delete("/collection", verifyToken, async (req, res) => {
     try {
+      await UserCollection.destroy({
+        where: { Coll_Id: req.body.Coll_id },
+      });
+      await SelectedReader.destroy({ where: { CollectionId: req.body.Coll_id } });
+      const patientDeleted = await Patient.destroy({
+        where: { CollectionId: req.body.Coll_id },
+      });
+      const lensDeleted = await Lenses.destroy({
+        where: { CollectionId: req.body.Coll_id },
+      });
+      const userExist = await SelectedReader.findOne({
+        where: { CollectionId: req.body.Coll_id },
+      });
+    
       const collectionDeleted = await Collection.destroy({
         where: { id: req.body.Coll_id },
       });
+
       if (!collectionDeleted)
         res.status(500).send({ message: "Internal server data" });
       return res.status(200).send({
@@ -453,13 +602,25 @@ module.exports = (app) => {
   // Lenses CRUD operation
   router.post("/lens", verifyToken, async (req, res) => {
     try {
+      // const { lensId } = req.body;
+      const { lensId, CollectionId } = req.body;
+
+      // Check if a lens with the provided lensId and collId already exists
+      const existingLens = await Lenses.findOne({ where: { lensId, CollectionId: CollectionId } });
+  
+      if (existingLens) {
+        // Lens with the provided lensId and collId already exists
+        return res.status(400).json({ message: "Lens with the provided lensId and collId already exists" });
+      }
+
+      if (existingLens) {
+        // Lens with the provided lensId already exists
+        return res.status(400).json({ message: "Lens with the provided lensId already exists" });
+      }
       const data = {
         ...req.body,
         UserId: req.query.userId,
       };
-      // generateUniqueAlphanumericString().then(async (uniqueString) => {
-      //     console.log('Generated unique string:', uniqueString);
-      //     data.lensId = uniqueString;
       console.log("post lens data", data);
       const LensData = await Lenses.create(data);
       if (!LensData) res.status(500).send({ message: "Internal server data" });
@@ -472,59 +633,156 @@ module.exports = (app) => {
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
-  //create lens using csv file
+  const upload = multer().single("csv");
+  // const upload = multer().single("xlsx");
+
+  // router.post("/lensCsv", verifyToken, upload, async (req, res) => {
+  //   const collId = req.query.collid;
+  //   try {
+  //     if (!req.file) {
+  //       return res.status(400).json({ error: "CSV file not provided." });
+  //     }
+
+  //     const excelFile = req.file;
+
+  //     const workbook = xlsx.read(excelFile.buffer, { type: "buffer" });
+  //     const sheetName = workbook.SheetNames[0];
+  //     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+  //     const validLensStatus = ['selected', 'available', 'missing', 'reading', 'dispensed', 'trashed'];
+  //     if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.toLowerCase()))) {
+  //       return res.status(400).json({ error: "Please select a correct Lens_Status for all records." ,status:false});
+  //     }
+
+  //     const lensData = [];
+  //     const todayDate = moment().tz('America/New_York').startOf('day').toISOString();
+  //     for (const row of sheetData) {
+  //       const lensEntry = {
+  //         lensId: row.Lens_ID || row.lensId,
+  //         // Lens_Status: 'available' || null,
+  //         Lens_Status: row.Lens_Status || row.Lens_Status,
+  //         Lens_Gender: row.Lens_Gender || null,
+  //         RSphere: row.RSphere !== undefined ? row.RSphere.toString() : null,
+  //         RCylinder: row.RCylinder !== undefined ? row.RCylinder.toString() : null,
+  //         RAxis: row.RAxis !== undefined ? row.RAxis.toString() : null,
+  //         RAdd: row.RAdd !== undefined ? row.RAdd.toString() : null,
+  //         LSphere: row.LSphere !== undefined ? row.LSphere.toString() : null,
+  //         LCylinder: row.LCylinder !== undefined ? row.LCylinder.toString() : null,
+  //         LAxis: row.LAxis !== undefined ? row.LAxis.toString() : null,
+  //         LAdd: row.LAdd !== undefined ? row.LAdd.toString() : null,
+  //         CollectionId: collId || null,
+  //         createdAt: todayDate,
+  //         updatedAt: todayDate
+  //       };
+
+  //       // Check if Lens_ID already exists in the database
+  //       // const existingLens = await Lenses.findOne({
+  //       //   where: { CollectionId: collId }
+  //       // });
+  //       const existingLens = await Lenses.findOne({
+  //         where: { lensId: row.Lens_ID }
+  //       });
+
+  //       if (!existingLens) {
+  //         lensData.push(lensEntry);
+  //       }
+  //     }
+
+  //     try {
+  //       if (lensData.length > 0) {
+  //         const createdLenses = await Lenses.bulkCreate(lensData);
+  //         return res.status(200).send({
+  //           message: "Lenses created successfully",
+  //           Lens_Data: createdLenses
+  //         });
+  //       } else {
+  //         return res.status(200).send({
+  //           message: "No new lenses added from the CSV file"
+  //         });
+  //       }
+  //     } catch (e) {
+  //       res.status(500).send({ message: "Error creating lenses", error: e });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ message: "Internal server error", error: e });
+  //   }
+  // });
+
   router.post("/lensCsv", verifyToken, upload, async (req, res) => {
+    const collId = req.query.collid;
     try {
       if (!req.file) {
         return res.status(400).json({ error: "CSV file not provided." });
       }
-
+  
       const excelFile = req.file;
-
+  
       const workbook = xlsx.read(excelFile.buffer, { type: "buffer" });
       const sheetName = workbook.SheetNames[0];
       const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-      const lensData = sheetData.map((row) => {
-        const lensEntry = {
-          Lens_ID: row.Lens_ID || "",
-          Lens_Status: row.Lens_Status || "",
-          Lens_Gender: row.Lens_Gender || "",
-          RSphere: row.RSphere !== undefined ? row.RSphere.toString() : "",
-          RCylinder:
-            row.RCylinder !== undefined ? row.RCylinder.toString() : "",
-          RAxis: row.RAxis !== undefined ? row.RAxis.toString() : "",
-          RAdd: row.RAdd !== undefined ? row.RAdd.toString() : "",
-          LSphere: row.LSphere !== undefined ? row.LSphere.toString() : "",
-          LCylinder:
-            row.LCylinder !== undefined ? row.LCylinder.toString() : "",
-          LAxis: row.LAxis !== undefined ? row.LAxis.toString() : "",
-          LAdd: row.LAdd !== undefined ? row.LAdd.toString() : "",
-          UserId: req.query.userId,
-          Is_Blocked: false,
-          Is_Booked: false,
-        };
-        return lensEntry;
+  
+      const validLensStatus = ['selected', 'available', 'missing', 'reading', 'dispensed', 'trashed'];
+      if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.toLowerCase()))) {
+        return res.status(400).json({ error: "Please select a correct Lens_Status for all records.", status: false });
+      }
+  
+      const lensData = [];
+      const todayDate = moment().tz('America/New_York').startOf('day').toISOString();
+  
+      // Check if any duplicate Lens_ID or lensId exists for the provided CollectionId
+      const existingLensIds = await Lenses.findAll({
+        attributes: ['lensId'],
+        where: { CollectionId: collId }
       });
-
-      try {
-        const createdLenses = await Lenses.bulkCreate(lensData);
-        // const createdLenses = await Lenses.create(lensData);
-        if (!createdLenses) {
-          return res.status(500).send({ message: "Error creating lenses" });
+      const existingLensIdSet = new Set(existingLensIds.map(lens => lens.lensId));
+  
+      for (const row of sheetData) {
+        if (existingLensIdSet.has(row.Lens_ID || row.lensId)) {
+          return res.status(400).json({ error: `Lens with ID  ${row.Lens_ID || row.lensId} already exists for the provided CollectionId. Please ensure Lens IDs are unique.`, status: false });
         }
-
-        return res.status(200).send({
-          message: "Lenses created successfully",
-          Lens_Data: createdLenses,
-        });
+  
+        const lensEntry = {
+          lensId: row.Lens_ID || row.lensId,
+          Lens_Status: row.Lens_Status || row.Lens_Status,
+          Lens_Gender: row.Lens_Gender || null,
+          RSphere: row.RSphere !== undefined ? row.RSphere.toString() : null,
+          RCylinder: row.RCylinder !== undefined ? row.RCylinder.toString() : null,
+          RAxis: row.RAxis !== undefined ? row.RAxis.toString() : null,
+          RAdd: row.RAdd !== undefined ? row.RAdd.toString() : null,
+          LSphere: row.LSphere !== undefined ? row.LSphere.toString() : null,
+          LCylinder: row.LCylinder !== undefined ? row.LCylinder.toString() : null,
+          LAxis: row.LAxis !== undefined ? row.LAxis.toString() : null,
+          LAdd: row.LAdd !== undefined ? row.LAdd.toString() : null,
+          CollectionId: collId || null,
+          createdAt: todayDate,
+          updatedAt: todayDate
+        };
+  
+  
+        lensData.push(lensEntry);
+      }
+  
+      try {
+        if (lensData.length > 0) {
+          const createdLenses = await Lenses.bulkCreate(lensData);
+          return res.status(200).send({
+            message: "Lenses created successfully",
+            status:true,
+            Lens_Data: createdLenses
+          });
+        } else {
+          return res.status(200).send({
+            message: "No new lenses added from the CSV file",status:true
+          });
+        }
       } catch (e) {
-        res.status(500).send({ message: "Internal server error", error: e });
+        res.status(500).send({ message: "Error creating lenses", error: e,status:false });
       }
     } catch (e) {
-      res.status(500).send({ message: "Internal server error", error: e });
+      res.status(500).send({ message: "Internal server error", error: e ,status:false});
     }
   });
+  
 
   router.get("/lens", verifyToken, async (req, res) => {
     try {
@@ -582,16 +840,18 @@ module.exports = (app) => {
       const whereCondition =
         Object.keys(filter).length > 0
           ? {
-              [Op.and]: Object.keys(filter).map((key) => ({
-                [key]: filter[key],
-              })),
-              //[Op.and]: [{userId : userId}]
-            }
+            [Op.and]: Object.keys(filter).map((key) => ({
+              [key]: filter[key],
+            })),
+            //[Op.and]: [{userId : userId}]
+          }
           : {};
 
       const Lensesdata = await Lenses.findAll({
         where: whereCondition,
+        include: [{ model: Collection, attributes: ['Coll_name'] }],
       });
+
 
       if (!Lensesdata) {
         return res.status(500).send({ message: "Internal server data" });
@@ -601,6 +861,111 @@ module.exports = (app) => {
         Lenses_Data: Lensesdata,
       });
     } catch (e) {
+      res.status(500).send({ message: "Internal server error", error: e });
+    }
+  });
+
+  router.get('/lensesByCollectionId', async (req, res) => {
+    try {
+      const { collectionId } = req.query;
+
+      // Check if collectionId is provided
+      if (!collectionId) {
+        return res.status(400).json({ message: 'CollectionId is required in query parameters.' });
+      }
+
+      // Query lenses based on the provided collectionId
+      const lensesData = await Lenses.findAll({
+        where: {
+          CollectionId: collectionId
+        }
+      });
+
+      // Return the lens data as JSON response
+      res.status(200).json({ message: 'Lens data found', lensesData: lensesData });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal server error', error: error });
+    }
+  });
+
+  // router.post("/getLensById", verifyToken, async (req, res) => {
+  //   try {
+  //     const { lensId } = req.query;
+  //     const { collectionIds } = req.body;
+  //     if (!lensId) {
+  //       return res.status(400).send({ message: "Lens ID is required in the query parameters." });
+  //     }
+  //     // const whereClause = {
+  //     //   CollectionId: {
+  //     //     [Sequelize.Op.in]: collectionIds, lensId: lensId,
+  //     //   },
+  //     // };
+
+  //     // // Filter based on req.query.lensId if present
+  //     // if (lensId) {
+  //     //   whereClause.lensId = lensId;
+  //     // }
+
+  //     // const lensData = await Lenses.findAll({
+  //     //   where: whereClause,
+  //     // });
+  //     const whereClause = {
+  //       lensId: lensId,
+  //       CollectionId: collectionIds
+  //     };
+  
+  //     // Retrieve lens data based on the where clause
+  //     const lensData = await Lenses.findAll({
+  //       where: whereClause
+  //     });
+
+  //     return res.status(200).send({
+  //       message: "Lens data",
+  //       Lenses_Data: lensData,
+  //     });
+  //   } catch (e) {
+  //     console.error("Error:", e);
+  //     res.status(500).send({ message: "Internal server error", error: e });
+  //   }
+  // });
+  router.post("/getLensById", verifyToken, async (req, res) => {
+    try {
+      let { lensId } = req.query;
+      const { collectionIds } = req.body;
+      if (lensId === null || lensId === undefined || lensId === "") {
+        lensId = null;
+      }
+
+      const whereClause = {
+        lensId: lensId,
+        CollectionId: collectionIds
+      };
+
+      if (lensId === null) {
+        delete whereClause.lensId;
+      }
+
+      // Retrieve lens data based on the where clause
+      const lensData = await Lenses.findAll({
+        where: whereClause
+      });
+      // const whereClause = {
+      //   lensId: lensId,
+      //   CollectionId: collectionIds
+      // };
+  
+      // // Retrieve lens data based on the where clause
+      // const lensData = await Lenses.findAll({
+      //   where: whereClause
+      // });
+
+      return res.status(200).send({
+        message: "Lens data",
+        Lenses_Data: lensData,
+      });
+    } catch (e) {
+      console.error("Error:", e);
       res.status(500).send({ message: "Internal server error", error: e });
     }
   });
@@ -678,19 +1043,22 @@ module.exports = (app) => {
     }
   });
 
-  router.get("/patientById", verifyToken, async (req, res) => {
+  router.get("/patientById", async (req, res) => {
+    const patientId = req.query.id;
     try {
-      const patientData = await Patient.findOne();
+      const patientData = await Patient.findOne({ where: { PatientId: patientId } });
       if (!patientData)
-        res.status(500).send({ message: "Internal server data" });
+        return res.status(404).send({ message: "Patient not found" });
       return res.status(200).send({
         message: "Patient data",
         Patient_Data: patientData,
       });
-    } catch (e) {
-      res.status(500).send({ message: "Internal server error", error: e });
+    } catch (error) {
+      console.error("Error fetching patient data:", error);
+      res.status(500).send({ message: "Internal server error", error: error.message });
     }
   });
+
 
   router.get("/filterpatientById", verifyToken, async (req, res) => {
     try {
@@ -754,7 +1122,7 @@ module.exports = (app) => {
       let patientUpdated = await Patient.update(req.body, {
         where: { id: id },
       });
-      if (!patientUpdated){
+      if (!patientUpdated) {
         res.status(500).send({ message: "Internal server data" });
       }
       patientUpdated = await Patient.findOne({ id: id });
@@ -885,7 +1253,7 @@ module.exports = (app) => {
 
       await Promise.all(updatePromises);
       // Check if the arrays are empty
-      
+
       return res.status(200).send({
         message: "Configuration data updated successfully",
       });
@@ -916,7 +1284,7 @@ module.exports = (app) => {
 
       await Promise.all(updatePromises);
       // Check if the arrays are empty
-      
+
       return res.status(200).send({
         message: "Configuration data updated successfully",
       });
@@ -933,14 +1301,25 @@ module.exports = (app) => {
       };
 
       const existingRecord = await SelectedReader.findOne({
-       where :{ lensId: data.lensId,
-        Patient_id: data.Patient_id}
+        where: {
+          lensId: data.lensId,
+          Patient_id: data.Patient_id
+        }
       });
 
+      // if (existingRecord) {
+      //   return res.status(400).send({ message: "Record with the same lensId and PatientId already exists" });
+      // }
       if (existingRecord) {
-        return res.status(400).send({ message: "Record with the same lensId and PatientId already exists" });
+        // Update the existing record instead of creating a new one
+        await SelectedReader.update(data, {
+          where: {
+            lensId: data.lensId,
+          }
+        });
+        return res.status(200).send({ message: "Record updated successfully" });
       }
-
+      let LensUpdated = await Lenses.update(req.body, { where: { lensId: data.lensId,CollectionId:data.CollectionId } });
       const readerData = await SelectedReader.create(data);
       if (!readerData)
         res.status(500).send({ message: "Internal server data" });
@@ -992,15 +1371,17 @@ module.exports = (app) => {
       }
 
       const userExist = await SelectedReader.findOne({
-        where: { Patient_id: patientId,
-          lensId: lensId},
+        where: {
+          Patient_id: patientId,
+          lensId: lensId
+        },
       });
       if (!userExist) {
         res.status(500).send({ message: "User is not available" });
       }
 
       await SelectedReader.destroy({
-        where: { Patient_id: patientId,lensId: lensId},
+        where: { Patient_id: patientId, lensId: lensId },
       });
       res.status(200).send({ message: "User deleted successfully" });
     } catch (e) {

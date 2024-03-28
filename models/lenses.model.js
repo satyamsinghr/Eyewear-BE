@@ -9,6 +9,14 @@ module.exports = (sequelize, Sequelize) => {
     lensId: {
       type: Sequelize.STRING,
       allowNull: false,
+    },
+    CollectionId: {
+      type: Sequelize.UUID,
+      allowNull: true,
+      // references: {
+      //   model: 'collections',
+      //   key: 'id'
+      // }
     },  
     Lens_Status: {
       type: Sequelize.STRING,
@@ -110,5 +118,7 @@ module.exports = (sequelize, Sequelize) => {
       
     }
   });
+
+  Lenses.belongsTo(sequelize.models.Collection, { foreignKey: 'CollectionId' });
   return Lenses;
 };

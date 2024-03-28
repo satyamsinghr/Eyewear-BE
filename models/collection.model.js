@@ -29,11 +29,12 @@ module.exports = (sequelize, Sequelize) => {
     },
     UserId: {
       type: Sequelize.UUID,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
+      // references: {
+      //   model: 'users',
+      //   key: 'id'
+      // }
     }
   });
+  
   return Collection;
 };

@@ -10,6 +10,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       }, 
+      CollectionId: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        // references: {
+        //   model: 'collections',
+        //   key: 'id'
+        // }
+      }, 
       Percentage: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -97,5 +105,6 @@ module.exports = (sequelize, Sequelize) => {
         }
       }
   });
+  Patient.belongsTo(sequelize.models.Collection, { foreignKey: 'CollectionId' });
   return Patient;
 };

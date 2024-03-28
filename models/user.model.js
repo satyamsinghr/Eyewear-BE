@@ -28,5 +28,8 @@ module.exports = (sequelize, Sequelize) => {
     },
     // timestamps: false // Disable timestamps
   });
+  User.associate = (models) => {
+    User.hasMany(models.UserCollection, { foreignKey: 'userId' });
+  };
   return User;
 };

@@ -14,6 +14,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: true
       },
+      CollectionId: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        // references: {
+        //   model: 'collections',
+        //   key: 'id'
+        // }
+      },
     });
+    SelectedReader.belongsTo(sequelize.models.Collection, { foreignKey: 'CollectionId' });
     return SelectedReader;
   };
