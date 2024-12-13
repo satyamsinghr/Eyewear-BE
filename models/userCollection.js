@@ -10,12 +10,10 @@ module.exports = (sequelize, Sequelize) => {
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
-        primaryKey: true
       },
       Coll_Id: {
         type: Sequelize.UUID,
         allowNull: false,
-        primaryKey: true,
         // references: {
         //     model: Collection,
         //     key: 'id'

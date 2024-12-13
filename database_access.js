@@ -47,7 +47,7 @@ module.exports = (app) => {
       });
       console.log("tokenDatatokenData", tokenData)
       if (!tokenData) {
-        return res.status(403).send({
+        return res.status(401).send({
           message: "No token provided!",
         });
       }
@@ -68,6 +68,22 @@ module.exports = (app) => {
       });
     }
   };
+
+
+  // const verifyToken = async (req, res, next) => {
+  //   try {
+  //     // Simulate unauthorized response for testing purposes
+  //     return res.status(401).send({
+  //       message: "Unauthorized! (Testing Purpose)",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error retrieving token from database:", error);
+  //     return res.status(500).send({
+  //       message: "Internal Server Error",
+  //     });
+  //   }
+  // };
+
 
   // router.post("/cleardb", async (req, res) => {
   //   try {

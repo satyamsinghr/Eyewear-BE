@@ -1,11 +1,10 @@
 const Sequelize = require("sequelize");
 // const sequelize = new Sequelize('eyewear', 'sa', 'admin@123', {
-const sequelize = new Sequelize('eyewearData', 'eyewear', 'Admin@123', {
-  host: 'localhost',
-  port: 1433,
-  dialect: 'mssql',
-  logging: true,
-});
+  const sequelize = new Sequelize('eyewear15march', 'sa', 'admin', {
+    host: 'localhost',
+    port: 1433,
+    dialect: 'mssql'
+  });
 
 const db = {};
 
@@ -24,4 +23,8 @@ db.AlgoData = require("./models/algoData.model.js")(sequelize, Sequelize);
 db.AxisConfig = require("./models/AxisConfig.model.js")(sequelize, Sequelize);
 db.EyeWearConfig = require("./models/eyewearConfig.model.js")(sequelize, Sequelize);
 
+
+
+// User.belongsToMany(Collection, { through: UserCollection });
+// Collection.belongsToMany(User, { through: UserCollection });
 module.exports = db;
