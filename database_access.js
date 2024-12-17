@@ -724,41 +724,125 @@ module.exports = (app) => {
   //   }
   // });
 
+  // router.post("/lensCsv", verifyToken, upload, async (req, res) => {
+  //   const collId = req.query.collid;
+  //   try {
+  //     if (!req.file) {
+  //       return res.status(400).json({ error: "CSV file not provided." });
+  //     }
+
+  //     const excelFile = req.file;
+
+  //     const workbook = xlsx.read(excelFile.buffer, { type: "buffer" });
+  //     const sheetName = workbook.SheetNames[0];
+  //     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+  //     const validLensStatus = ['selected', 'available', 'missing', 'reading', 'dispensed', 'trashed'];
+  //     if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.toLowerCase()))) {
+  //       return res.status(400).json({ error: "Please select a correct Lens_Status for all records.", status: false });
+  //     }
+
+  //     const lensData = [];
+  //     const todayDate = moment().tz('America/New_York').startOf('day').toISOString();
+
+  //     // Check if any duplicate Lens_ID or lensId exists for the provided CollectionId
+  //     const existingLensIds = await Lenses.findAll({
+  //       attributes: ['lensId'],
+  //       where: { CollectionId: collId }
+  //     });
+  //     const existingLensIdSet = new Set(existingLensIds.map(lens => lens.lensId));
+
+  //     for (const row of sheetData) {
+  //       if (existingLensIdSet.has(row.Lens_ID || row.lensId)) {
+  //         return res.status(400).json({ error: `Lens with ID  ${row.Lens_ID || row.lensId} already exists for the provided CollectionId. Please ensure Lens IDs are unique.`, status: false });
+  //       }
+
+  //       const lensEntry = {
+  //         lensId: row.Lens_ID || row.lensId,
+  //         Lens_Status: row.Lens_Status || row.Lens_Status,
+  //         Lens_Gender: row.Lens_Gender || null,
+  //         RSphere: row.RSphere !== undefined ? row.RSphere.toString() : null,
+  //         RCylinder: row.RCylinder !== undefined ? row.RCylinder.toString() : null,
+  //         RAxis: row.RAxis !== undefined ? row.RAxis.toString() : null,
+  //         RAdd: row.RAdd !== undefined ? row.RAdd.toString() : null,
+  //         LSphere: row.LSphere !== undefined ? row.LSphere.toString() : null,
+  //         LCylinder: row.LCylinder !== undefined ? row.LCylinder.toString() : null,
+  //         LAxis: row.LAxis !== undefined ? row.LAxis.toString() : null,
+  //         LAdd: row.LAdd !== undefined ? row.LAdd.toString() : null,
+  //         CollectionId: collId || null,
+  //         createdAt: todayDate,
+  //         updatedAt: todayDate
+  //       };
+
+
+  //       lensData.push(lensEntry);
+  //     }
+
+  //     try {
+  //       if (lensData.length > 0) {
+  //         const createdLenses = await Lenses.bulkCreate(lensData);
+  //         return res.status(200).send({
+  //           message: "Lenses created successfully",
+  //           status:true,
+  //           Lens_Data: createdLenses
+  //         });
+  //       } else {
+  //         return res.status(200).send({
+  //           message: "No new lenses added from the CSV file",status:true
+  //         });
+  //       }
+  //     } catch (e) {
+  //       res.status(500).send({ message: "Error creating lenses", error: e,status:false });
+  //     }
+  //   } catch (e) {
+  //     res.status(500).send({ message: "Internal server error", error: e ,status:false});
+  //   }
+  // });
   router.post("/lensCsv", verifyToken, upload, async (req, res) => {
     const collId = req.query.collid;
     try {
       if (!req.file) {
         return res.status(400).json({ error: "CSV file not provided." });
       }
-  
+
       const excelFile = req.file;
-  
+
       const workbook = xlsx.read(excelFile.buffer, { type: "buffer" });
       const sheetName = workbook.SheetNames[0];
       const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-  
+
       const validLensStatus = ['selected', 'available', 'missing', 'reading', 'dispensed', 'trashed'];
       if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.toLowerCase()))) {
         return res.status(400).json({ error: "Please select a correct Lens_Status for all records.", status: false });
       }
-  
+
       const lensData = [];
+      const duplicateLenses = [];
       const todayDate = moment().tz('America/New_York').startOf('day').toISOString();
-  
-      // Check if any duplicate Lens_ID or lensId exists for the provided CollectionId
+
+      // Check existing lens IDs
       const existingLensIds = await Lenses.findAll({
         attributes: ['lensId'],
         where: { CollectionId: collId }
       });
       const existingLensIdSet = new Set(existingLensIds.map(lens => lens.lensId));
-  
+
+      // Track lens IDs in current import to catch duplicates within the CSV
+      const importedLensIds = new Set();
+
       for (const row of sheetData) {
-        if (existingLensIdSet.has(row.Lens_ID || row.lensId)) {
-          return res.status(400).json({ error: `Lens with ID  ${row.Lens_ID || row.lensId} already exists for the provided CollectionId. Please ensure Lens IDs are unique.`, status: false });
+        const currentLensId = row.Lens_ID || row.lensId;
+
+        // Check if lens ID already exists in database or current import
+        if (existingLensIdSet.has(currentLensId) || importedLensIds.has(currentLensId)) {
+          duplicateLenses.push(currentLensId);
+          continue; // Skip this lens but continue processing others
         }
-  
+
+        importedLensIds.add(currentLensId);
+
         const lensEntry = {
-          lensId: row.Lens_ID || row.lensId,
+          lensId: currentLensId,
           Lens_Status: row.Lens_Status || row.Lens_Status,
           Lens_Gender: row.Lens_Gender || null,
           RSphere: row.RSphere !== undefined ? row.RSphere.toString() : null,
@@ -773,32 +857,45 @@ module.exports = (app) => {
           createdAt: todayDate,
           updatedAt: todayDate
         };
-  
-  
+
         lensData.push(lensEntry);
       }
-  
+
       try {
         if (lensData.length > 0) {
           const createdLenses = await Lenses.bulkCreate(lensData);
-          return res.status(200).send({
+          const response = {
             message: "Lenses created successfully",
-            status:true,
-            Lens_Data: createdLenses
-          });
+            status: true,
+            Lens_Data: createdLenses,
+          };
+
+          // Add warning message if there were duplicates
+          if (duplicateLenses.length > 0) {
+            response.warnings = {
+              message: "Some duplicate lens IDs were skipped",
+              skippedLenses: duplicateLenses
+            };
+          }
+
+          return res.status(200).send(response);
         } else {
-          return res.status(200).send({
-            message: "No new lenses added from the CSV file",status:true
+          return res.status(500).send({
+            error: "No new lenses added from the CSV file",
+            status: false,
+            warnings: duplicateLenses.length > 0 ? {
+              message: "All lens IDs were duplicates",
+              skippedLenses: duplicateLenses
+            } : undefined
           });
         }
       } catch (e) {
-        res.status(500).send({ message: "Error creating lenses", error: e,status:false });
+        res.status(500).send({ message: "Error creating lenses", error: e, status: false });
       }
     } catch (e) {
-      res.status(500).send({ message: "Internal server error", error: e ,status:false});
+      res.status(500).send({ message: "Internal server error", error: e, status: false });
     }
   });
-  
 
   router.get("/lens", verifyToken, async (req, res) => {
     try {
