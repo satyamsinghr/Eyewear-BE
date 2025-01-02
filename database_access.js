@@ -415,7 +415,7 @@ module.exports = (app) => {
         res.status(500).send({ message: "Internal server data" });
       return res.status(200).send({
         message: "Collection data",
-        Collection_Data: collectionData,
+        Collection_Data: collectionData.sort((a, b) => new Date(b.Coll_date) - new Date(a.Coll_date)),
       });
     } catch (e) {
       res.status(500).send({ message: "Internal server error", error: e });
@@ -812,7 +812,7 @@ module.exports = (app) => {
       const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
       const validLensStatus = ['selected', 'available', 'missing', 'reading', 'dispensed', 'trashed'];
-      if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.toLowerCase()))) {
+      if (sheetData.some(row => !row.Lens_Status || !validLensStatus.includes(row.Lens_Status.trim().toLowerCase()))) {
         return res.status(400).json({ error: "Please select a correct Lens_Status for all records.", status: false });
       }
 
