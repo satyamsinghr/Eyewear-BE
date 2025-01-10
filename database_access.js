@@ -339,6 +339,12 @@ module.exports = (app) => {
       if (!userExist) {
         res.status(500).send({ message: "User is not available" });
       }
+      const PatientExist = await Patient.findOne({
+        where: { UserId: id },
+      });
+      if (PatientExist) {
+        await Patient.destroy({ where: { UserId: id } });
+      }
       const UserCollectionExist = await UserCollection.findOne({
         where: { UserId: id },
       });
@@ -843,7 +849,7 @@ module.exports = (app) => {
 
         const lensEntry = {
           lensId: currentLensId,
-          Lens_Status: row.Lens_Status || row.Lens_Status,
+          Lens_Status: row.Lens_Status ? row.Lens_Status.trim().toLowerCase() : null,
           Lens_Gender: row.Lens_Gender || null,
           RSphere: row.RSphere !== undefined ? row.RSphere.toString() : null,
           RCylinder: row.RCylinder !== undefined ? row.RCylinder.toString() : null,
